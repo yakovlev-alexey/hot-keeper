@@ -91,7 +91,7 @@ Create a `hot-keeper.json` file in your project root (or specify a custom path w
 In your application, require the `keep` and `kept` functions:
 
 ```js
-const { keep, kept } = require("hot-keeper/lib/keeper");
+const { keep, kept } = require("hot-keeper/lib/keeper.cjs");
 
 // After restart, retrieve the variable
 const storedCache = kept("myCache", {}); // Second parameter is the default value
@@ -116,7 +116,7 @@ keep("myCache", {});
 
 ```js
 const express = require("express");
-const { keep, kept } = require("hot-keeper/lib/keeper");
+const { keep, kept } = require("hot-keeper/lib/keeper.cjs");
 
 // This expensive operation won't run on each reload
 const webpackCompiler = keep("webpackCompiler", createWebpackCompiler());
