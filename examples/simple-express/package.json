@@ -1,0 +1,14 @@
+{
+  "name": "hot-keeper-example",
+  "version": "1.0.0",
+  "description": "Example for hot-keeper",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ../../bin/cli.js app.js",
+    "start:custom": "node ../../bin/cli.js app.js -p 8080 -w ./ --exclude node_modules",
+    "start:verbose": "node ../../bin/cli.js app.js --port 3000"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
