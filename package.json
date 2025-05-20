@@ -7,6 +7,11 @@
   "bin": {
     "hot-keeper": "./bin/cli.js"
   },
+  "files": [
+    "lib",
+    "bin",
+    "README.md"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
