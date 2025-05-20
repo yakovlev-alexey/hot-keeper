@@ -7,6 +7,10 @@
   "bin": {
     "hot-keeper": "./bin/cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yakovlev-alexey/hot-keeper"
+  },
   "files": [
     "lib",
     "bin",
