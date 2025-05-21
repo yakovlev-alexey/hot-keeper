@@ -2,6 +2,21 @@
 
 A hot reloader for CommonJS applications that allows you to keep specified variables between restarts.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Features](#features)
+- [How It Works](#how-it-works)
+- [Why Only CommonJS?](#why-only-commonjs)
+- [Usage](#usage)
+  - [Command Line](#command-line)
+  - [Command Line Options](#command-line-options)
+  - [Configuration File](#configuration-file)
+  - [Keeping Variables Between Reloads](#keeping-variables-between-reloads)
+- [Configuration Options](#configuration-options)
+- [Example](#example)
+- [License](#license)
+
 ## Installation
 
 ```bash
@@ -27,6 +42,19 @@ yarn add hot-keeper
 - Supports both HTTP and HTTPS servers
 - Configurable through JSON config file and/or command line arguments
 - Works with Express, Koa, and other Node.js server frameworks
+
+## How It Works
+
+`hot-keeper` is designed to provide hot-reloading for Node.js applications written in CommonJS (CJS), while allowing you to persist certain variables (such as caches, compilers, or other expensive-to-create objects) between restarts. This is especially useful for development servers, build tools, or any scenario where you want to avoid re-initializing heavy resources on every code change.
+
+## Why Only CommonJS?
+
+`hot-keeper` relies on Node's `require.cache` to control which modules are reloaded and which are kept alive between reloads. This is only possible with CommonJS modules, because:
+
+- **CommonJS**: Every `require()` call is cached in `require.cache`, which can be programmatically cleared or preserved for specific modules. This allows us to keep the state of the `keeper.cjs` module while reloading everything else.
+- **ES Modules**: Node.js does not expose a module cache for ES Modules, and there is no supported way to clear or preserve module state between reloads. As a result, variable persistence and fine-grained cache control are not possible with ESM.
+
+The only way to leverage this module for variable persistance is to first transpile your ESM server code into CJS using tools like [esbuild](https://esbuild.github.io) or [SWC](https://swc.rs).
 
 ## Usage
 
@@ -118,8 +146,12 @@ keep("myCache", {});
 const express = require("express");
 const { keep, kept } = require("hot-keeper/lib/keeper.cjs");
 
-// This expensive operation won't run on each reload
-const webpackCompiler = keep("webpackCompiler", createWebpackCompiler());
+let webpackCompiler = kept("webpackCompiler", null);
+
+if (!webpackCompiler) {
+  webpackCompiler = createWebpackCompiler();
+  keep("webpackCompiler", webpackCompiler);
+}
 
 const app = express();
 
