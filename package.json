@@ -27,7 +27,7 @@
     "server",
     "cache"
   ],
-  "author": "",
+  "author": "Alexey Yakovlev <alexeyyakovlev0359@gmail.com>",
   "license": "MIT",
   "engines": {
     "node": ">=14.16.0"
