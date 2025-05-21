@@ -1,6 +1,6 @@
 {
   "name": "hot-keeper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Hot reloader for CommonJS applications that keeps specified variables between restarts",
   "type": "module",
   "main": "lib/keeper.cjs",
